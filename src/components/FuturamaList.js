@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 export default function FuturamaList(){
  const [characters, setCharacters] = useState([]);
  const [loading, setLoading] = useState(true);
+ const [search, setSearch] = useState('');
 
 
 useEffect(() => {
@@ -16,7 +17,9 @@ console.log(result, 'result')
 // console.log(charactersData, 'character data')
 
 const characters = result.map((character) => ({
-    name:character.Name
+    name: character.Name,
+    age: character.Age,
+
 }));
 
 setCharacters(characters)
@@ -35,9 +38,9 @@ return(
         characters.map((character, i) => {
             return (
                 <>
-            <div>
+                <div>
               <h2>Name: {character.name}</h2> 
-
+              <h3>Age: {character.age}</h3>
                </div>
                </>
             )
