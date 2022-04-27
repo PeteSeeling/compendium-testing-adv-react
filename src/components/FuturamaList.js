@@ -1,45 +1,49 @@
-
+import React from 'react';
 import { useEffect, useState } from 'react';
 
 
 export default function FuturamaList(){
  const [characters, setCharacters] = useState([]);
-const [loading, setLoading] = useState(true);
-
+ const [loading, setLoading] = useState(true);
 
 
 useEffect(() => {
 async function getCharacters() {
 const res = await fetch('https://futuramaapi.herokuapp.com/api/v2/characters');
-console.log(await res.json());
+const result = await res.json();
+console.log(result, 'result')
+// const charactersData = result[0];
+// console.log(charactersData, 'character data')
 
-const characters = result.results;
-const resultCount = result.length;
+const characters = result.map((character) => ({
+    name:character.Name
+}));
 
 setCharacters(characters)
-console.log(characters, resultCount)
+console.log(characters)
 
 }
 getCharacters();
-setLoading(false);
 
 },[])
-// if (loading){
+if (loading){
 
 return(
     <>
     <h3>Characters of FuturamaList</h3>
         {
         characters.map((character, i) => {
-            return (<div>
-              <h2>{characters.Name}Name</h2> 
-              
+            return (
+                <>
+            <div>
+              <h2>Name: {character.name}</h2> 
+
                </div>
+               </>
             )
         })}
-    
-    
+
     </>
 )
 
-}
+}}
