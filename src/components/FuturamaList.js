@@ -4,8 +4,21 @@ import { useEffect, useState } from 'react';
 
 export default function FuturamaList(){
  const [characters, setCharacters] = useState([]);
+ const [searchedCharacters, setSearchedCharacters] = useState([]);
  const [loading, setLoading] = useState(true);
  const [search, setSearch] = useState('');
+
+ function handleSubmit(e){
+     e.preventDefault()
+
+     setCharacters(characters)
+     if(search){
+         const filteredCharacters = characters.filter(character => character.name.includes(search));
+
+         setCharacters(filteredCharacters);
+     }
+     setSearch('')
+ }
 
 
 useEffect(() => {
@@ -33,20 +46,31 @@ if (loading){
 
 return(
     <>
-    <h3>Characters of FuturamaList</h3>
-        {
-        characters.map((character, i) => {
-            return (
-                <>
-                <div>
+<form onSubmit={handleSubmit}>
+<label>Name
+    <input type='text' value={search} onChange={e => setSearch(e.target.value)}></input>
+        <button>Search</button>
+    </label>
+</form>
+{search
+? searchedCharacters.map((character, i) => {
+    return(  
+              <div>
               <h2>Name: {character.name}</h2> 
               <h3>Age: {character.age}</h3>
                </div>
-               </>
-            )
-        })}
-
-    </>
+            )  
+        })
+        : characters.map((character, i) => {
+            return(  
+                        <div>
+                      <h2>Name: {character.name}</h2> 
+                      <h3>Age: {character.age}</h3>
+                       </div>
+                    )  
+            })
+        }
+        </>
 )
-
-}}
+    }
+}
