@@ -25,11 +25,9 @@ export default function FuturamaList(){
 
 useEffect(() => {
 async function getCharacters() {
+
 const res = await fetch('https://futuramaapi.herokuapp.com/api/v2/characters');
 const result = await res.json();
-
-// const charactersData = result[0];
-// console.log(charactersData, 'character data')
 
 const characters = result.map((character) => ({
     name: character.Name,
@@ -38,8 +36,6 @@ const characters = result.map((character) => ({
 }));
 
 setCharacters(characters)
-
-
 }
 getCharacters();
 
@@ -54,6 +50,7 @@ return(
         <button aria-label='button'>Search</button>
     </label>
 </form>
+
 {search
 ? searchedCharacters.map((character, i) => {
     return(  

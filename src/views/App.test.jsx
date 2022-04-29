@@ -1,5 +1,4 @@
 import { screen, render} from '@testing-library/react'
-
 import userEvent from '@testing-library/user-event'
 import FuturamaList from '../components/futuramalist'
 import { rest } from 'msw'
@@ -23,11 +22,8 @@ describe('tests', () =>{
         userEvent.type(search, 'Fry');
         userEvent.click(button);
      
-        
         const result = await screen.getByLabelText(/Search/i)
-      
-
+    
             expect(result.value).toEqual('Fry')
         })
-
     })
