@@ -11,11 +11,13 @@ export default function FuturamaList(){
  function handleSubmit(e){
      e.preventDefault()
 
-     setCharacters(characters)
      if(search){
-         const filteredCharacters = characters.filter(character => character.name.includes(search));
+        const filteredCharacters = characters.filter((character) => quote.character
+        .toLowerCase(search)
+        .includes(search));
+        setSearchedCharacters(filteredCharacters )
 
-         setCharacters(filteredCharacters);
+        return filteredCharacters ;
      }
      setSearch('')
  }
@@ -25,7 +27,7 @@ useEffect(() => {
 async function getCharacters() {
 const res = await fetch('https://futuramaapi.herokuapp.com/api/v2/characters');
 const result = await res.json();
-console.log(result, 'result')
+
 // const charactersData = result[0];
 // console.log(charactersData, 'character data')
 
@@ -36,7 +38,7 @@ const characters = result.map((character) => ({
 }));
 
 setCharacters(characters)
-console.log(characters)
+
 
 }
 getCharacters();
@@ -48,15 +50,15 @@ return(
     <>
 <form onSubmit={handleSubmit}>
 <label>Name
-    <input type='text' value={search} onChange={e => setSearch(e.target.value)}></input>
-        <button>Search</button>
+    <input type='text' aria-label='Search' value={search} onChange={e => setSearch(e.target.value)}></input>
+        <button aria-label='button'>Search</button>
     </label>
 </form>
 {search
 ? searchedCharacters.map((character, i) => {
     return(  
               <div>
-              <h2>Name: {character.name}</h2> 
+              <h2 aria-label='character'>Name: {character.name}</h2> 
               <h3>Age: {character.age}</h3>
                </div>
             )  
