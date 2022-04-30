@@ -63,7 +63,7 @@ return(
         : characters.map((character, i) => {
             return(  
                         <div>
-                      <h2>Name: {character.name}</h2> 
+                      <h2 aria-label='display-name'>Name: {character.name}</h2> 
                       <h3>Age: {character.age}</h3>
                        </div>
                     )  
