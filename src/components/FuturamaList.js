@@ -12,7 +12,7 @@ export default function FuturamaList(){
      e.preventDefault()
 
      if(search){
-        const filteredCharacters = characters.filter((character) => quote.character
+        const filteredCharacters = characters.filter((character) => character.name
         .toLowerCase(search)
         .includes(search));
         setSearchedCharacters(filteredCharacters )

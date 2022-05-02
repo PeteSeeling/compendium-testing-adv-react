@@ -1,20 +1,22 @@
 import { screen, render, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import FuturamaList from '../components/futuramalist'
+import App from '../App'
 import { act } from 'react-dom/test-utils'
 
 
 describe('tests', () =>{
  test('Should test to ensure a character, character quote and search button are displayed (components)', async () => {
-        render(<FuturamaList />);
+        render(<App />);
 
         return waitFor(() => {
 
-       const text = screen.findByRole('textbox', {Name: /Bender/i})
+    const name= screen.getByLabelText('display-name', {Name: /Bender/i})
+    expect(name).toBeInTheDocument();
       
-       const textbox = screen.findByRole('textbox', {Quote: /A grim day for robot-kind. But we can always build more killbots./i}
+   const quote = screen.findByRole('textbox', {Quote: /A grim day for robot-kind. But we can always build more killbots./i})
+   expect(quote).toBeInTheDocument()
 
-        )})}
+        })}
 
         // const searchButton = await screen.getByText(/search/i, {selector: 'button'})
 
@@ -29,7 +31,7 @@ describe('tests', () =>{
  })
   
     it('Should test the character fry returns after a user searches for fry', async () => {
-        render(<FuturamaList />);
+        render(<App/>);
 
         const search = await screen.findByLabelText(/Search/i);
         const button = await screen.findByLabelText(/button/i);
