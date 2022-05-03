@@ -1,46 +1,34 @@
-import { screen, render, waitFor} from '@testing-library/react'
+import { screen, render, waitFor, waitForElementToBeRemoved} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import FuturamaList from '../components/futuramalist'
-import { act } from 'react-dom/test-utils'
+import App from '../App'
+import { MemoryRouter } from 'react-router-dom'
 
 
 describe('tests', () =>{
  test('Should test to ensure a character, character quote and search button are displayed (components)', async () => {
-        render(<FuturamaList />);
+        render(<App />);
 
-        return waitFor(() => {
+    await screen.findByRole('heading', {Name: /Futurama List/i})
 
-       const text = screen.findByRole('textbox', {Name: /Bender/i})
-      
-       const textbox = screen.findByRole('textbox', {Quote: /A grim day for robot-kind. But we can always build more killbots./i}
+    // expect(heading).toBeInTheDocument();
+    const quote = await screen.findByRole('textbox', {Quote: /A grim day for robot-kind. But we can always build more killbots./i})
+   
+    expect(quote).toBeInTheDocument()
 
-        )})}
+        }
+ )
+ 
+    it('Should test the character fry returns after a user searches for Candy', async () => {
+        render(<MemoryRouter><App/></MemoryRouter>);
 
-        // const searchButton = await screen.getByText(/search/i, {selector: 'button'})
+        await waitForElementToBeRemoved(screen.getByText('loading'))
 
-  
-
-            // const text = await screen.findByText('Name: Candy')
-           
-          
-            // expect(text.value).toEqual('Name: Candy');
-
-       )
- })
-  
-    it('Should test the character fry returns after a user searches for fry', async () => {
-        render(<FuturamaList />);
-
-        const search = await screen.findByLabelText(/Search/i);
-        const button = await screen.findByLabelText(/button/i);
-        
-        userEvent.type(search, 'Fry');
-      
-        userEvent.click(button);
-  return waitFor(() => {
-        const result = screen.getByLabelText(/Search/i)
+        const search = await screen.findByPlaceholderText(/find-character/i);
+       
+        userEvent.type(search, 'Candy');
+   
+        const result = await screen.findByLabelText(/display-name/i)
     
-            expect(result.value).toEqual('Fry')
+         expect(result.textContent).toEqual('Name: Candy')
         })
-        
         })

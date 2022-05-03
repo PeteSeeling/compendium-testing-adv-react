@@ -8,19 +8,15 @@ export default function FuturamaList(){
  const [loading, setLoading] = useState(true);
  const [search, setSearch] = useState('');
 
- function handleSubmit(e){
-     e.preventDefault()
+ const displayCharacters = search ? searchedCharacters : characters
 
-     if(search){
-        const filteredCharacters = characters.filter((character) => quote.character
-        .toLowerCase(search)
-        .includes(search));
-        setSearchedCharacters(filteredCharacters )
-
-        return filteredCharacters ;
-     }
-     setSearch('')
- }
+ 
+ useEffect(() => {
+    const filteredCharacters = characters.filter((character) => character.name
+        .toLowerCase()
+        .includes(search.toLowerCase()));
+        setSearchedCharacters(filteredCharacters)
+ },[search])
 
 
 useEffect(() => {
@@ -36,31 +32,23 @@ const characters = result.map((character) => ({
 }));
 
 setCharacters(characters)
+setLoading(false);
 }
 getCharacters();
 
+
 },[])
-if (loading){
+// if (loading)
+
 
 return(
     <>
-<form onSubmit={handleSubmit}>
-<label>Name
-    <input type='text' aria-label='Search' value={search} onChange={e => setSearch(e.target.value)}></input>
-        <button aria-label='button'>Search</button>
-    </label>
-</form>
 
-{search
-? searchedCharacters.map((character, i) => {
-    return(  
-              <div>
-              <h2 aria-label='character'>Name: {character.name}</h2> 
-              <h3>Age: {character.age}</h3>
-               </div>
-            )  
-        })
-        : characters.map((character, i) => {
+    <input type='text' placeholder='find-character' aria-label='Search' value={search} onChange={e => setSearch(e.target.value)}></input>
+       
+{
+    (loading) ? (<div aria-label='loading'>loading</div>) :
+displayCharacters.map((character, i) => {
             return(  
                         <div>
                       <h2 aria-label='display-name'>Name: {character.name}</h2> 
@@ -72,4 +60,4 @@ return(
         </>
 )
     }
-}
+
