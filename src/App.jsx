@@ -1,4 +1,4 @@
-import FuturamaList from './components/futuramalist';
+import FuturamaList from './components/FuturamaList';
 
 import { Link, Route, Switch } from 'react-router-dom'
 
